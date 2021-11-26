@@ -13,7 +13,7 @@ struct testApp: App {
     @State var error: Error? = nil
     var body: some Scene {
         WindowGroup {
-            WebView(title: $title, url: URL(string: "http://localhost:3000/")!)
+            WebView(title: $title, url: URL(string: "https://khairulp031.github.io/webview_test/")!)
                             .onLoadStatusChanged { loading, error in
                                 if loading {
                                     self.title = "Loading…"
