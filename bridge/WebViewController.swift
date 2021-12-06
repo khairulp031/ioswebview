@@ -11,7 +11,11 @@ struct WebView: UIViewRepresentable {
     }
 
     func makeUIView(context: Context) -> WKWebView {
+        print("url::\(url)")
+        
         let view = WKWebView()
+        view.configuration.preferences.setValue(true, forKey: "allowFileAccessFromFileURLs")
+        view.loadFileURL(url, allowingReadAccessTo: url)
         view.navigationDelegate = context.coordinator
         view.evaluateJavaScript("navigator.userAgent") { (result, error) in
             if let unwrappedUserAgent = result as? String {
@@ -54,13 +58,10 @@ struct WebView: UIViewRepresentable {
         }
         
         func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-            print("decidePolicyFor")
             let url=navigationAction.request.url
             let scheme=url?.scheme
             
             if (url?.absoluteString=="about:blank" || scheme=="abc") {
-                print(url?.absoluteString)
-                print("abc://")
                 let query=url?.query
                 let body=navigationAction.request.httpBody
                 

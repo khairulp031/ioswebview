@@ -8,12 +8,13 @@
 import SwiftUI
 
 @main
-struct testApp: App {
-    @State var title: String = ""
+struct bridgeApp: App {
+    @State var title: String = "www"
     @State var error: Error? = nil
     var body: some Scene {
         WindowGroup {
-            WebView(title: $title, url: URL(string: "https://khairulp031.github.io/webview_test/")!)
+            let url = Bundle.main.url(forResource: "index", withExtension: "html", subdirectory: "www")!
+            WebView(title: $title, url: url)
                             .onLoadStatusChanged { loading, error in
                                 if loading {
                                     self.title = "Loading…"
