@@ -21,6 +21,10 @@ struct WebView: UIViewRepresentable {
         webConfiguration.preferences=pf
         webConfiguration.defaultWebpagePreferences=pref
         let view = WKWebView(frame: .zero, configuration: webConfiguration)
+        let cookies = HTTPCookieStorage.shared.cookies ?? []
+        for cookie in cookies {
+            view.configuration.websiteDataStore.httpCookieStore.setCookie(cookie)
+        }
         view.configuration.preferences.setValue(true, forKey: "allowFileAccessFromFileURLs")
         view.loadFileURL(url, allowingReadAccessTo: url)
         view.navigationDelegate = context.coordinator
