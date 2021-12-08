@@ -15,6 +15,7 @@
 		578ED4BB27510A4A00CB2763 /* testUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578ED4BA27510A4A00CB2763 /* testUITestsLaunchTests.swift */; };
 		578ED4CC27510CA200CB2763 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578ED4CB27510CA200CB2763 /* WebViewController.swift */; };
 		57A15B4A275DAA7400406BB9 /* www in Resources */ = {isa = PBXBuildFile; fileRef = 57A15B49275DAA7400406BB9 /* www */; };
+		57A15B532760469B00406BB9 /* WDBSetWebSecurityEnabled.m in Sources */ = {isa = PBXBuildFile; fileRef = 57A15B522760469B00406BB9 /* WDBSetWebSecurityEnabled.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,10 @@
 		578ED4BA27510A4A00CB2763 /* testUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		578ED4CB27510CA200CB2763 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		57A15B49275DAA7400406BB9 /* www */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = www; sourceTree = SOURCE_ROOT; };
+		57A15B4F275FB76D00406BB9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = Bridge/Info.plist; sourceTree = "<group>"; };
+		57A15B512760469A00406BB9 /* Bridge-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridge-Bridging-Header.h"; sourceTree = "<group>"; };
+		57A15B522760469B00406BB9 /* WDBSetWebSecurityEnabled.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WDBSetWebSecurityEnabled.m; sourceTree = "<group>"; };
+		57A15B60276074EC00406BB9 /* WDBSetWebSecurityEnabled.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WDBSetWebSecurityEnabled.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +81,7 @@
 		578ED49127510A4900CB2763 = {
 			isa = PBXGroup;
 			children = (
+				57A15B4F275FB76D00406BB9 /* Info.plist */,
 				578ED49C27510A4900CB2763 /* bridge */,
 				578ED4AD27510A4A00CB2763 /* bridgeTests */,
 				578ED4B727510A4A00CB2763 /* bridgeUITest */,
@@ -101,6 +107,9 @@
 				578ED4A127510A4A00CB2763 /* Assets.xcassets */,
 				578ED4A327510A4A00CB2763 /* Preview Content */,
 				578ED4CB27510CA200CB2763 /* WebViewController.swift */,
+				57A15B522760469B00406BB9 /* WDBSetWebSecurityEnabled.m */,
+				57A15B60276074EC00406BB9 /* WDBSetWebSecurityEnabled.h */,
+				57A15B512760469A00406BB9 /* Bridge-Bridging-Header.h */,
 			);
 			path = bridge;
 			sourceTree = "<group>";
@@ -198,6 +207,7 @@
 				TargetAttributes = {
 					578ED49927510A4900CB2763 = {
 						CreatedOnToolsVersion = 13.1;
+						LastSwiftMigration = 1310;
 					};
 					578ED4A927510A4A00CB2763 = {
 						CreatedOnToolsVersion = 13.1;
@@ -263,6 +273,7 @@
 			files = (
 				578ED49E27510A4900CB2763 /* bridgeApp.swift in Sources */,
 				578ED4CC27510CA200CB2763 /* WebViewController.swift in Sources */,
+				57A15B532760469B00406BB9 /* WDBSetWebSecurityEnabled.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -420,12 +431,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "bridge/Preview\\ Content/Preview\\ Assets.xcassets";
 				DEVELOPMENT_TEAM = UP3JYR8WJA;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Bridge/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -440,6 +454,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = bridge.webview.khairulanshar.org;
 				PRODUCT_NAME = "Webview Bridge";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "bridge/Bridge-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -450,12 +466,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "bridge/Preview\\ Content/Preview\\ Assets.xcassets";
 				DEVELOPMENT_TEAM = UP3JYR8WJA;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Bridge/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -470,6 +489,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = bridge.webview.khairulanshar.org;
 				PRODUCT_NAME = "Webview Bridge";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "bridge/Bridge-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

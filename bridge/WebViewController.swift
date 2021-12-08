@@ -2,26 +2,28 @@ import SwiftUI
 import WebKit
 
 struct WebView: UIViewRepresentable {
-    @Binding var title: String
-    var url: URL
-    var loadStatusChanged: ((Bool, Error?) -> Void)? = nil
-
+    let url = Bundle.main.url(forResource: "index", withExtension: "html", subdirectory: "www")!
+   
     func makeCoordinator() -> WebView.Coordinator {
         Coordinator(self)
     }
 
     func makeUIView(context: Context) -> WKWebView {
         print("url::\(url)")
-        
-        let view = WKWebView()
+        let webConfiguration = WKWebViewConfiguration()
+        webConfiguration.applicationNameForUserAgent="webview"
+        let pref:WKWebpagePreferences=WKWebpagePreferences()
+        let pf:WKPreferences=WKPreferences()
+        let wDBSetWebSecurity = WDBSetWebSecurity()
+        wDBSetWebSecurity.prefs = pf
+        wDBSetWebSecurity.enabled = false
+        wDBSetWebSecurity.update()
+        webConfiguration.preferences=pf
+        webConfiguration.defaultWebpagePreferences=pref
+        let view = WKWebView(frame: .zero, configuration: webConfiguration)
         view.configuration.preferences.setValue(true, forKey: "allowFileAccessFromFileURLs")
         view.loadFileURL(url, allowingReadAccessTo: url)
         view.navigationDelegate = context.coordinator
-        view.evaluateJavaScript("navigator.userAgent") { (result, error) in
-            if let unwrappedUserAgent = result as? String {
-                view.customUserAgent = unwrappedUserAgent+" webview"
-            }
-        }
         view.load(URLRequest(url: url))
         return view
     }
@@ -31,11 +33,7 @@ struct WebView: UIViewRepresentable {
         // Note that this method will be called A LOT
     }
 
-    func onLoadStatusChanged(perform: ((Bool, Error?) -> Void)?) -> some View {
-        var copy = self
-        copy.loadStatusChanged = perform
-        return copy
-    }
+    
 
     class Coordinator: NSObject, WKNavigationDelegate {
         let parent: WebView
@@ -44,19 +42,6 @@ struct WebView: UIViewRepresentable {
             self.parent = parent
         }
 
-        func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
-            parent.loadStatusChanged?(true, nil)
-        }
-
-        func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-            parent.title = webView.title ?? ""
-            parent.loadStatusChanged?(false, nil)
-        }
-
-        func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-            parent.loadStatusChanged?(false, error)
-        }
-        
         func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
             let url=navigationAction.request.url
             let scheme=url?.scheme
@@ -66,20 +51,7 @@ struct WebView: UIViewRepresentable {
                 let body=navigationAction.request.httpBody
                 
                 if let action = url?.host as? String {
-                    
-                    /*
-                     let jsonObject: [String: Any] = [
-                         "type_id": 1,
-                         "model_id": 1,
-                         "transfer": [
-                             "startDate": "10/04/2015 12:45",
-                             "endDate": "10/04/2015 16:00"
-                         ]
-                     ]
-                     */
-                     
                     let jsonObject: NSMutableDictionary = NSMutableDictionary()
-
                     jsonObject.setValue("10/04/2015 12:45", forKey: "startDate")
                     jsonObject.setValue("10/04/2015 16:00", forKey: "endDate")
                     jsonObject.setValue(1, forKey: "model_id")
