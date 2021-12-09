@@ -2,16 +2,21 @@ import SwiftUI
 import WebKit
 
 struct WebView: UIViewRepresentable {
-    let url = Bundle.main.url(forResource: "index", withExtension: "html", subdirectory: "www")!
-   
+    let urlFile = Bundle.main.url(forResource: "index", withExtension: "html", subdirectory: "www")!
+    let urlWeb = URL(string: "http://192.168.1.85:3000")!
     func makeCoordinator() -> WebView.Coordinator {
         Coordinator(self)
     }
 
     func makeUIView(context: Context) -> WKWebView {
-        print("url::\(url)")
         let webConfiguration = WKWebViewConfiguration()
         webConfiguration.applicationNameForUserAgent="webview"
+        
+        //disable CORS for file://
+        //webConfiguration.setValue(true, forKey: "allowUniversalAccessFromFileURLs")
+        
+        
+        //disable CORS for http(s)://
         let pref:WKWebpagePreferences=WKWebpagePreferences()
         let pf:WKPreferences=WKPreferences()
         let wDBSetWebSecurity = WDBSetWebSecurity()
@@ -20,15 +25,16 @@ struct WebView: UIViewRepresentable {
         wDBSetWebSecurity.update()
         webConfiguration.preferences=pf
         webConfiguration.defaultWebpagePreferences=pref
+        
+        
         let view = WKWebView(frame: .zero, configuration: webConfiguration)
         let cookies = HTTPCookieStorage.shared.cookies ?? []
         for cookie in cookies {
             view.configuration.websiteDataStore.httpCookieStore.setCookie(cookie)
         }
-        view.configuration.preferences.setValue(true, forKey: "allowFileAccessFromFileURLs")
-        view.loadFileURL(url, allowingReadAccessTo: url)
+        //view.loadFileURL(url, allowingReadAccessTo: url)
         view.navigationDelegate = context.coordinator
-        view.load(URLRequest(url: url))
+        view.load(URLRequest(url: urlWeb))
         return view
     }
 
